@@ -17,7 +17,7 @@ class ClientDecorator(Decorator):
         self.description = "Supplies the basis for representing clients"
 
     def generate_register(self, register):
-        ''' generates de register number for the client'''
+        ''' generates the register number for the client'''
         self.register = register
 
     def decorate(self, decorated):
