@@ -1,6 +1,5 @@
 from should_dsl import should, ShouldNotSatisfied
 from domain.base.decorator import Decorator
-from domain.node.person import Person
 from domain.node.node import Node
 from domain.resource.operation import operation
 from domain.supportive.rule import rule

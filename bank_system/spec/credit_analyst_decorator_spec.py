@@ -18,10 +18,10 @@ class CreditAnalystDecoratorSpec(unittest.TestCase):
         self.a_credit_analyst_decorator = CreditAnalystDecorator('12345-6')
         #test doubles won't work given type checking rules, using classic
         self.a_person = Person()
-        a_client = Person()
+        self.a_client = Person()
         a_client_decorator = ClientDecorator()
-        a_client_decorator.decorate(a_client)
-        self.an_account = BankAccountDecorator(a_client, '1234567-8')
+        a_client_decorator.decorate(self.a_client)
+        self.an_account = BankAccountDecorator(self.a_client, '1234567-8')
 
     def it_decorates_a_person(self):
         #should fail
@@ -31,7 +31,7 @@ class CreditAnalystDecoratorSpec(unittest.TestCase):
         an_employee_decorator.decorate(self.a_person)
         self.a_credit_analyst_decorator.decorate(self.a_person)
         self.a_credit_analyst_decorator.decorated |should| be(self.a_person)
-        self.a_credit_analyst_decorator.decorated |should| have(2).decorators
+        self.a_person |should| have(2).decorators
 
     def it_creates_a_loan_request(self):
         an_employee_decorator = EmployeeDecorator()
@@ -92,6 +92,7 @@ class CreditAnalystDecoratorSpec(unittest.TestCase):
         self.a_credit_analyst_decorator.move_loan_to_account(loan_key, self.an_account)
         self.an_account.decorated.input_area |should| include(loan_key)
         self.an_account.balance |should| equal_to(7000)
+        self.an_account.client |should| be(self.a_client)
 
     def it_changes_its_loan_limit(self):
         self.a_credit_analyst_decorator.change_loan_limit(100000)
