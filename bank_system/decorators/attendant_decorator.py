@@ -22,6 +22,9 @@ class AttendantDecorator(Decorator):
         self.decorated = decorated
         self.decorated.decorators[self.__doc__] = self
 
+    def discount(self, a_check):
+        self.current_check = a_check
+
     @classmethod
     @rule('association')
     def rule_should_contain_employee_decorator(self, decorated):
