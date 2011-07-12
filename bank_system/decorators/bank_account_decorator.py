@@ -13,6 +13,8 @@ from bank_system.decorators.client_decorator import ClientDecorator
 class BankAccountDecorator(Decorator):
     '''Bank Account'''
 
+    active_accounts = []
+
     def __init__(self, client, number):
         Decorator.__init__(self)
         self.description = "A bank account"
@@ -36,6 +38,7 @@ class BankAccountDecorator(Decorator):
             raise AssociationError('Machine instance expected, instead % s passed' % type(decorated))
         self.decorated = decorated
         self.decorated.decorators[self.__doc__] = self
+        BankAccountDecorator.active_accounts.append(self)
 
     @operation(category = 'business')
     def deposit(self, value):
