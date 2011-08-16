@@ -27,9 +27,9 @@ class AttendantDecorator(Decorator):
         for account in BankAccountDecorator.active_accounts:
             if account.number == a_check.account_number:
                 if account.average_credit >= a_check.value:
-                    account.average_credit -= a_check.value
+                    account.draw(a_check.value)
                 else:
-                    raise InsuficientFunds("Insuficient Money")
+                    raise InsuficientFunds("Insuficient Funds")
 
     @classmethod
     @rule('association')
