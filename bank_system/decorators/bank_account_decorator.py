@@ -37,8 +37,7 @@ class BankAccountDecorator(Decorator):
         except:
             raise AssociationError('Machine instance expected, instead % s passed' % type(decorated))
         self.decorated = decorated
-<<<<<<< HEAD
-        self.decorated.decorators[self.__doc__] = self
+        self.decorated.decorate(self)
         BankAccountDecorator.active_accounts.append(self)
 
     @operation(category = 'business')
@@ -50,9 +49,6 @@ class BankAccountDecorator(Decorator):
     def draw(self, value):
         ''' Makes a banking draw '''
         self.average_credit -= value
-=======
-        self.decorated.decorate(self)
->>>>>>> d6ffced1268b7c9975e0a47ff00c00d47a84edec
 
     @classmethod
     @rule('association')
