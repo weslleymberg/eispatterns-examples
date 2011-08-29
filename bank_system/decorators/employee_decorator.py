@@ -9,6 +9,7 @@ from domain.supportive.association_error import AssociationError
 class EmployeeDecorator(Decorator):
     '''A general purpose Employee decorator'''
     decoration_rules = ['should_be_instance_of_person']
+
     def __init__(self):
         Decorator.__init__(self)
         self.description = "Supplies the basis for representing employes"

@@ -1,34 +1,24 @@
-<<<<<<< HEAD
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from should_dsl import should
-=======
 from should_dsl import should, ShouldNotSatisfied
->>>>>>> 7ee11877a7871213ed193ded5e4ed90346fe5075
 from domain.base.decorator import Decorator
 from domain.node.machine import Machine
 from domain.resource.operation import operation
 from domain.supportive.association_error import AssociationError
-<<<<<<< HEAD
 from bank_system.decorators.client_decorator import ClientDecorator
-=======
 from bank_system.rules.bank_system_rule_manager import BankSystemRuleManager
->>>>>>> 7ee11877a7871213ed193ded5e4ed90346fe5075
 
 
 class BankAccountDecorator(Decorator):
     '''Bank Account'''
-<<<<<<< HEAD
 
     active_accounts = []
 
-    def __init__(self, client, number):
-=======
     decoration_rules = ['should_be_instance_of_machine']
 
-    def __init__(self, number):
->>>>>>> 7ee11877a7871213ed193ded5e4ed90346fe5075
+    def __init__(self, client, number):
         Decorator.__init__(self)
         self.description = "A bank account"
         #log area for already processed resources
@@ -44,7 +34,6 @@ class BankAccountDecorator(Decorator):
             raise AssociationError('Client must be decorated by ClientDecorator previously')
         self.client = client
 
-<<<<<<< HEAD
     def decorate(self, decorated):
         try:
             BankAccountDecorator.rule_should_be_machine_instance(decorated)
@@ -65,13 +54,11 @@ class BankAccountDecorator(Decorator):
         self.average_credit -= value
 
     @classmethod
-    @rule('association')
+    #@rule('association')
     def rule_should_be_machine_instance(self, decorated):
         ''' Decorated object should be a Machine '''
         decorated |should| be_instance_of(Machine)
 
-=======
->>>>>>> 7ee11877a7871213ed193ded5e4ed90346fe5075
     @operation(category='business')
     def register_credit(self, value):
         ''' Register a credit in the balance '''
@@ -83,7 +70,7 @@ class BankAccountDecorator(Decorator):
         return message
 
     @classmethod
-    @rule('association')
+    #@rule('association')
     def rule_should_contain_client_decorator(self, client):
         ''' Client object must contain ClientDecorator '''
         client.decorators |should| contain(ClientDecorator.__doc__)
