@@ -1,10 +1,8 @@
 from datetime import datetime
-from should_dsl import should
+from should_dsl import should, ShouldNotSatisfied
 from domain.supportive.association_error import AssociationError
-from domain.supportive.rule import rule
 from domain.resource.work_item import WorkItem
-#from bank_system.decorators.credit_analyst_decorator import CreditAnalystDecorator
-from bank_system.decorators.bank_account_decorator import BankAccountDecorator
+from bank_system.rules.bank_system_rule_manager import BankSystemRuleManager
 
 
 class LoanRequest(WorkItem):
@@ -14,17 +12,10 @@ class LoanRequest(WorkItem):
         self.value = value
         self.approved = False
         self.datetime = datetime.now()
-        self.analyst = analyst
-        try:
-           #self.rule_should_be_credit_analyst_instance(analyst) --> circular reference, how to solve?
-           self.rule_should_be_bank_account_instance(account)
-        except:
+        if not BankSystemRuleManager.get_instance().check_rule('should_be_instance_of_bank_account', account):
            raise AssociationError('Bank Account instance expected, instead %s passed' % type(account))
-        else:
-           self.account = account
-
-    @rule('association')
-    def rule_should_be_bank_account_instance(self, account):
-        ''' Account should be of type Bank Account Decorator '''
-        account |should| be_instance_of(BankAccountDecorator)
+        self.account = account
+        if not BankSystemRuleManager.get_instance().check_rule('should_be_instance_of_credit_analyst', analyst):
+            raise AssociationError('Credit Analyst instance expected, instead %s passed' % type(analyst))
+        self.analyst = analyst
 
