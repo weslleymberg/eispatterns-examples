@@ -21,7 +21,7 @@ class AttendantDecorator(Decorator):
         except:
             raise AssociationError('Person must be previously decorated by Employee Decorator')
         self.decorated = decorated
-        self.decorated.decorators[self.__doc__] = self
+        self.decorated.decorate(self)
 
     def discount_check(self, a_check):
         for account in BankAccountDecorator.active_accounts:

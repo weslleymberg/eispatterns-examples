@@ -35,7 +35,7 @@ class BankAccountDecorator(Decorator):
         try:
             BankAccountDecorator.rule_should_be_machine_instance(decorated)
         except:
-            raise AssociationError('Machine instance expected, instead % s passed' % type(decorated))
+            raise AssociationError('Machine instance expected, instead %s passed' % type(decorated))
         self.decorated = decorated
         self.decorated.decorate(self)
         BankAccountDecorator.active_accounts.append(self)

@@ -15,6 +15,7 @@ class ClientDecorator(Decorator):
     def __init__(self):
         Decorator.__init__(self)
         self.description = "Supplies the basis for representing clients"
+        self.accounts = []
 
     def generate_register(self, register):
         ''' generates the register number for the client'''
@@ -26,7 +27,7 @@ class ClientDecorator(Decorator):
         except:
             raise AssociationError('Person instance expected, instead % s passed' % type(decorated))
         self.decorated = decorated
-        self.decorated.decorators[self.__doc__] = self
+        self.decorated.decorate(self)
 
     @classmethod
     @rule('association')

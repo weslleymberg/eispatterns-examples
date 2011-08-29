@@ -13,10 +13,10 @@ from domain.supportive.association_error import AssociationError
 class BankAccountDecoratorSpec(unittest.TestCase):
 
     def setUp(self):
-        self.an_client_decorator = ClientDecorator()
-        self.an_client = Person()
-        self.an_client_decorator.decorate(self.an_client)
-        self.a_bank_account_decorator = BankAccountDecorator(self.an_client, '1234 5 - 6')
+        self.a_client_decorator = ClientDecorator()
+        self.a_client = Person()
+        self.a_client_decorator.decorate(self.a_client)
+        self.a_bank_account_decorator = BankAccountDecorator(self.a_client, '1234 5 - 6')
         #test doubles won't work given type checking rules, using classic
         self.a_machine = Machine()
 
@@ -40,8 +40,8 @@ class BankAccountDecoratorSpec(unittest.TestCase):
 
     def it_check_the_client(self):
         #should work
-        self.an_client |should| have(1).decorators
-        self.a_bank_account_decorator.client |should| be(self.an_client)
+        self.a_client |should| have(1).decorators
+        self.a_bank_account_decorator.client |should| be(self.a_client)
 
     def it_realize_a_banking(self):
         self.a_bank_account_decorator.decorate(self.a_machine)
