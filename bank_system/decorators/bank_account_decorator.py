@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from should_dsl import should
 from should_dsl import should, ShouldNotSatisfied
 from domain.base.decorator import Decorator
 from domain.node.machine import Machine
@@ -9,7 +8,6 @@ from domain.resource.operation import operation
 from domain.supportive.association_error import AssociationError
 from bank_system.decorators.client_decorator import ClientDecorator
 from bank_system.rules.bank_system_rule_manager import BankSystemRuleManager
-
 
 class BankAccountDecorator(Decorator):
     '''Bank Account'''

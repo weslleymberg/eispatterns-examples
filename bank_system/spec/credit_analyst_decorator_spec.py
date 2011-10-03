@@ -10,11 +10,15 @@ from bank_system.decorators.credit_analyst_decorator import CreditAnalystDecorat
 from bank_system.decorators.bank_account_decorator import BankAccountDecorator
 from bank_system.decorators.employee_decorator import EmployeeDecorator
 from bank_system.decorators.client_decorator import ClientDecorator
-
+from bank_system.rules.bank_system_rule_base import BankSystemRuleBase
+from domain.supportive.rule_manager import RuleManager
 
 class CreditAnalystDecoratorSpec(unittest.TestCase):
 
     def setUp(self):
+        #set the rule base
+        RuleManager.rule_base = BankSystemRuleBase()
+        #
         self.a_credit_analyst_decorator = CreditAnalystDecorator('12345-6')
         #test doubles won't work given type checking rules, using classic
         self.a_person = Person()
