@@ -25,8 +25,6 @@ class BankAccountDecoratorSpec(unittest.TestCase):
         self.a_bank_account_decorator.decorate(self.a_machine)
         self.a_bank_account_decorator.decorated |should| be(self.a_machine)
         self.a_bank_account_decorator.decorated |should| have(1).decorators
-        #should fail
-        lambda: self.a_bank_account_decorator.decorate('I am not a machine') |should| throw(AssociationError)
 
     def it_registers_a_credit(self):
         self.a_bank_account_decorator.balance = 100

@@ -7,14 +7,13 @@ from domain.node.machine import Machine
 from domain.resource.operation import operation
 from domain.supportive.association_error import AssociationError
 from bank_system.decorators.client_decorator import ClientDecorator
-from bank_system.rules.bank_system_rule_manager import BankSystemRuleManager
 
 class BankAccountDecorator(Decorator):
     '''Bank Account'''
 
-    active_accounts = []
-
     decoration_rules = ['should_be_instance_of_machine']
+
+    active_accounts = []
 
     def __init__(self, client, number):
         Decorator.__init__(self)
@@ -26,19 +25,8 @@ class BankAccountDecorator(Decorator):
         self.balance = 0
         self.restricted = False
         self.average_credit = 0
-        try:
-            BankAccountDecorator.rule_should_contain_client_decorator(client)
-        except:
-            raise AssociationError('Client must be decorated by ClientDecorator previously')
+        client |should| be_decorated_by(ClientDecorator)
         self.client = client
-
-    def decorate(self, decorated):
-        try:
-            BankAccountDecorator.rule_should_be_machine_instance(decorated)
-        except:
-            raise AssociationError('Machine instance expected, instead %s passed' % type(decorated))
-        self.decorated = decorated
-        self.decorated.decorate(self)
         BankAccountDecorator.active_accounts.append(self)
 
     @operation(category = 'business')
@@ -51,12 +39,6 @@ class BankAccountDecorator(Decorator):
         ''' Makes a banking draw '''
         self.average_credit -= value
 
-    @classmethod
-    #@rule('association')
-    def rule_should_be_machine_instance(self, decorated):
-        ''' Decorated object should be a Machine '''
-        decorated |should| be_instance_of(Machine)
-
     @operation(category='business')
     def register_credit(self, value):
         ''' Register a credit in the balance '''
@@ -66,9 +48,3 @@ class BankAccountDecorator(Decorator):
     def send_message_to_account_holder(self, message):
         ''' Sends a message to the account holder '''
         return message
-
-    @classmethod
-    #@rule('association')
-    def rule_should_contain_client_decorator(self, client):
-        ''' Client object must contain ClientDecorator '''
-        client.decorators |should| contain(ClientDecorator.__doc__)

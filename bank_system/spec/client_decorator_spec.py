@@ -19,9 +19,6 @@ class ClientDecoratorsSpec(unittest.TestCase):
         self.an_client_decorator.decorate(self.an_client)
         self.an_client_decorator.decorated |should| be(self.an_client)
         self.an_client |should| have(1).decorators
-        #should fail
-        non_person = 'I am not a person'
-        (self.an_client_decorator.decorate, non_person) |should| throw(AssociationError)
 
     def it_generates_a_register(self):
         self.an_client_decorator.generate_register('1234 5 - 6')

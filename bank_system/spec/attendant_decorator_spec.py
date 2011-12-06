@@ -21,9 +21,6 @@ class AttendantDecoratorSpec(unittest.TestCase):
         self.an_attendant = Person()
 
     def it_decorates_a_person(self):
-        #should fail
-        (self.an_attendant_decorator.decorate, self.an_attendant) |should| throw(AssociationError)
-        #should work
         self.an_employee_decorator.decorate(self.an_attendant)
         self.an_attendant_decorator.decorate(self.an_attendant)
         self.an_attendant_decorator.decorated |should| be(self.an_attendant)
@@ -48,8 +45,9 @@ class AttendantDecoratorSpec(unittest.TestCase):
         a_client_decorator = ClientDecorator()
         a_client_decorator.decorate(a_client)
         a_bank_account_decorator = BankAccountDecorator(a_client,"1234-5")
-        a_bank_account_decorator.average_credit = 100
         a_bank_account_decorator.decorate(a_machine)
+        a_bank_account_decorator.deposit(100)
+        a_bank_account_decorator.average_credit |should| equal_to(100)
         a_check = Check(id_="123", account_number="1234-5", value=10)
         self.an_attendant_decorator.discount_check(a_check)
         a_bank_account_decorator.average_credit |should| equal_to(90)

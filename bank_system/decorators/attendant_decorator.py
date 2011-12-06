@@ -11,17 +11,11 @@ from bank_system.decorators.bank_account_decorator import BankAccountDecorator
 
 class AttendantDecorator(Decorator):
     '''Attendant'''
+    decoration_rules = ['should_be_instance_of_person']
+
     def __init__(self):
         Decorator.__init__(self)
-        self.description = "An employee with attendant skilss"
-
-    def decorate(self, decorated):
-        try:
-            AttendantDecorator.rule_should_contain_employee_decorator(decorated)
-        except:
-            raise AssociationError('Person must be previously decorated by Employee Decorator')
-        self.decorated = decorated
-        self.decorated.decorate(self)
+        self.description = "An employee with attendant skills"
 
     def discount_check(self, a_check):
         for account in BankAccountDecorator.active_accounts:
@@ -30,13 +24,6 @@ class AttendantDecorator(Decorator):
                     account.draw(a_check.value)
                 else:
                     raise InsuficientFunds("Insuficient Funds")
-
-    @classmethod
-    @rule('association')
-    def rule_should_contain_employee_decorator(self, decorated):
-        ''' Decorated object should be already decorated by Employee '''
-        decorated |should| be_decorated_by(EmployeeDecorator)
-
 
 class InsuficientFunds(Exception):
     pass

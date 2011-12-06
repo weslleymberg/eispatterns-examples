@@ -20,7 +20,7 @@ class LoanRequestSpec(unittest.TestCase):
         #set the rule base
         RuleManager.rule_base = BankSystemRuleBase()
         #
-        an_account = BankAccountDecorator('12345-6')
+        an_account = BankAccountDecorator(a_client, '12345-6')
         an_analyst = CreditAnalystDecorator('abcde-f')
         (LoanRequest, 'I am not an account', 123, an_analyst) |should| throw(AssociationError)
         (LoanRequest, an_account, 123, 'I am not an analyst') |should| throw(AssociationError)

@@ -12,6 +12,8 @@ from domain.supportive.association_error import AssociationError
 class ClientDecorator(Decorator):
     '''A general porpuse Client decorator'''
 
+    decoration_rules = ['should_be_instance_of_person']
+
     def __init__(self):
         Decorator.__init__(self)
         self.description = "Supplies the basis for representing clients"
@@ -21,16 +23,3 @@ class ClientDecorator(Decorator):
         ''' generates the register number for the client'''
         self.register = register
 
-    def decorate(self, decorated):
-        try:
-            ClientDecorator.rule_should_be_person_instance(decorated)
-        except:
-            raise AssociationError('Person instance expected, instead % s passed' % type(decorated))
-        self.decorated = decorated
-        self.decorated.decorate(self)
-
-    @classmethod
-    @rule('association')
-    def rule_should_be_person_instance(self, decorated):
-        ''' Decorated object should be a Person '''
-        decorated |should| be_instance_of(Person)
